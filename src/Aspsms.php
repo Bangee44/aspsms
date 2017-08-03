@@ -365,7 +365,7 @@ class Aspsms
      * @return integer
      * @throws Exception
      */
-    public function credits()
+    public function creditsUsed()
     {
         // make request for "CreditsUsed" aspsms method
         $response = $this->request("CreditsUsed");
