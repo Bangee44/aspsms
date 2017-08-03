@@ -358,6 +358,30 @@ class Aspsms
         // return the amount
         return (int) $result[1];
     }
+    
+    /**
+     * Get the amount of credits used for the last sent SMS.
+     *
+     * @return integer
+     * @throws Exception
+     */
+    public function credits()
+    {
+        // make request for "CreditsUsed" aspsms method
+        $response = $this->request("CreditsUsed");
+        // explode the response
+        $result = $this->parseResponse($response);
+        // check result
+        if ($result[0] !== "CreditsUsed") {
+            if ($result[0] === "StatusCode" && array_key_exists($result[1], $this->sendStatusCodes)) {
+                throw new Exception($this->sendStatusCodes[$result[1]]);
+            } else {
+                throw new Exception("An unknown error occurred while checking the account balance. Response: \"{$response}\"");
+            }
+        }
+        // return the amount
+        return (int) $result[1];
+    }
 
     /**
      * Parse the response the response stringo into an array.
